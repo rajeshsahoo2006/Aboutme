@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rajesh Kumar Sahoo – Salesforce Technical Architect</title>
+  <title>Rajesh Kumar Sahoo – Senior Forward Deployed Engineer</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -93,10 +93,10 @@
       border-radius: 50%;
       object-fit: cover;
       border: 3px solid var(--surface);
-      display: block;
+      display: none;
     }
     #avatar-fallback {
-      display: none;
+      display: flex;
       position: relative;
       z-index: 1;
       width: 140px; height: 140px;
@@ -423,15 +423,16 @@
       <!-- Profile Photo -->
       <div class="avatar-wrap">
         <img src="profile.png" alt="Rajesh Kumar Sahoo"
-             onerror="if(!this.dataset.errored){this.dataset.errored='1';this.style.display='none';var fb=document.getElementById('avatar-fallback');if(fb)fb.style.display='flex';}"/>
+             onload="this.style.display='block';var fb=document.getElementById('avatar-fallback');if(fb)fb.style.display='none';"
+             onerror="this.style.display='none';"/>
         <div id="avatar-fallback">RK</div>
       </div>
 
       <div class="name-block">
         <h1>Rajesh Kumar <span>Sahoo</span></h1>
-        <div class="title-tag">Salesforce Senior Technical Architect &nbsp;·&nbsp; AI Specialist</div>
+        <div class="title-tag">Senior Forward Deployed Engineer &nbsp;·&nbsp; Salesforce Architect &nbsp;·&nbsp; AI Specialist</div>
         <p class="tagline">
-          14+ years crafting enterprise Salesforce solutions for Fortune 500 clients — automotive, healthcare, and contact center transformation.
+          15+ years building enterprise Salesforce solutions for Fortune 500 clients — now driving customer success as a Senior Forward Deployed Engineer across automotive, healthcare, and contact center domains.
         </p>
         <div class="contact-row">
           <span>📍 Rochester Hills, MI 48307</span>
@@ -455,7 +456,7 @@
         <section class="summary">
           <div class="section-title">Professional Summary</div>
           <p>
-            Highly accomplished Salesforce Technical Architect with 14+ years of experience designing and implementing complex enterprise solutions across automotive and healthcare industries. Specializes in digital transformation, contact center implementations, and AI-powered Salesforce capabilities. Proven leader on large-scale projects for Fortune 500 companies including General Motors, CVS MinuteClinic, Chrysler, and Stellantis. Currently pursuing a Master's in Artificial Intelligence at University of the Cumberlands.
+            Senior Forward Deployed Engineer and Salesforce Technical Architect with 15+ years of experience (since Mar 2011) designing and delivering complex enterprise solutions across automotive and healthcare industries. Specializes in digital transformation, contact center implementations, and AI-powered Salesforce capabilities — with a track record spanning Fortune 500 clients including General Motors, CVS MinuteClinic, Chrysler, and Stellantis. Now channeling deep field expertise to accelerate customer success and platform adoption in a forward deployed engineering capacity. Currently pursuing a Master's in Artificial Intelligence at University of the Cumberlands (Aug 2025).
           </p>
         </section>
       </div>
@@ -464,6 +465,25 @@
         <section>
           <div class="section-title">Experience</div>
 
+          <!-- Current Role: FDE -->
+          <div class="exp-item">
+            <div class="exp-header">
+              <div>
+                <div class="exp-company">Salesforce</div>
+                <div class="exp-title">Senior Forward Deployed Engineer</div>
+              </div>
+              <div class="exp-period">Jan 2026 – Present</div>
+            </div>
+            <div class="exp-desc">
+              Partnering directly with enterprise customers to accelerate Salesforce platform adoption, architect tailored solutions, and deliver hands-on technical expertise across pre-sales and post-deployment engagements. Bridging the gap between customer requirements and Salesforce capabilities using deep product knowledge and field experience.
+            </div>
+            <div class="exp-tags">
+              <span class="tag">Salesforce Platform</span><span class="tag">Agentforce</span>
+              <span class="tag">Einstein AI</span><span class="tag">Solution Architecture</span>
+              <span class="tag">Customer Success</span><span class="tag">Technical Advisory</span>
+            </div>
+          </div>
+
           <!-- GM OnStar -->
           <div class="exp-item">
             <div class="exp-header">
@@ -471,7 +491,7 @@
                 <div class="exp-company">General Motors — OnStar / CARE</div>
                 <div class="exp-title">Salesforce Technical Architect</div>
               </div>
-              <div class="exp-period">2022 – Present</div>
+              <div class="exp-period">2022 – Dec 2025</div>
             </div>
             <div class="exp-desc">
               Led comprehensive digital transformation of GM's OnStar and CARE systems — migrating from legacy GAA Java/Siebel applications to Salesforce Automotive Cloud across NAFTA and European regions. Architected multi-lingual data-sharing models, connected vehicle integrations, and NHTSA/TREAD Act compliance frameworks.
@@ -510,7 +530,7 @@
                 <div class="exp-company">FCA / Chrysler / Stellantis</div>
                 <div class="exp-title">Technical Lead — Digital Transformation</div>
               </div>
-              <div class="exp-period">2011 – 2021</div>
+              <div class="exp-period">Mar 2011 – 2021</div>
             </div>
             <div class="exp-desc">
               Supported and transformed 6+ mission-critical contact center applications — migrating from Java/WebSphere/DB2 to Salesforce Service &amp; Experience Cloud. Built specialized programs: Dealer Parts Support, Fleet Management, Recall Outreach, Courtesy Transport (Loaner), Vehicle Buyback, and Marketing Contact Center. Reduced maintenance costs 40%, improved CSAT 35%, and achieved 99.9% uptime.
@@ -570,7 +590,7 @@
           <div class="edu-item">
             <div class="edu-degree">M.S. Artificial Intelligence</div>
             <div class="edu-school">University of the Cumberlands</div>
-            <div class="edu-year">In Progress (2024 – Present)</div>
+            <div class="edu-year">In Progress (Aug 2025 – Present)</div>
           </div>
           <div class="edu-item">
             <div class="edu-degree">B.E. — Electronics &amp; Communication</div>
