@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rajesh Kumar Sahoo – Salesforce Technical Architect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0a1628;
+      --navy2:  #112240;
+      --teal:   #0ea5e9;
+      --teal2:  #38bdf8;
+      --gold:   #f0a500;
+      --light:  #e8f0fe;
+      --muted:  #94a3b8;
+      --white:  #ffffff;
+      --card:   #0f1f3d;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── BACKGROUND TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 10% 10%, rgba(14,165,233,.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 90% 90%, rgba(240,165,0,.07) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+    /* ── HEADER ── */
+    header {
+      padding: 4rem 0 3rem;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .header-inner {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    /* Profile image placeholder */
+    .avatar-wrap {
+      position: relative;
+      width: 150px; height: 150px; flex-shrink: 0;
+    }
+    .avatar-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--gold));
+      z-index: 0;
+    }
+    .avatar-wrap img {
+      position: relative; z-index: 1;
+      width: 150px; height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--navy);
+    }
+    /* Fallback initials if image not found */
+    .avatar-wrap img[src="profile.jpg"] { display: block; }
+
+    .name-block h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+    }
+    .name-block h1 span { color: var(--teal); }
+    .title-tag {
+      display: inline-block;
+      margin-top: .6rem;
+      font-size: .85rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .tagline {
+      margin-top: .8rem;
+      color: var(--muted);
+      font-size: .97rem;
+      max-width: 560px;
+    }
+
+    .contact-row {
+      display: flex; flex-wrap: wrap; gap: .6rem 1.4rem;
+      margin-top: 1.2rem; font-size: .85rem;
+    }
+    .contact-row a {
+      color: var(--teal2);
+      text-decoration: none;
+      display: flex; align-items: center; gap: .3rem;
+      transition: color .2s;
+    }
+    .contact-row a:hover { color: var(--gold); }
+    .contact-row span { color: var(--muted); display: flex; align-items: center; gap: .3rem; }
+
+    /* ── MAIN GRID ── */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 3rem;
+      padding: 3rem 0;
+    }
+
+    /* ── SECTION TITLES ── */
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 1.4rem;
+      padding-bottom: .5rem;
+      border-bottom: 1px solid rgba(14,165,233,.25);
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    section { margin-bottom: 2.8rem; }
+
+    /* ── SUMMARY ── */
+    .summary p { color: #b8c8e0; font-size: .95rem; }
+
+    /* ── EXPERIENCE ── */
+    .exp-item { margin-bottom: 2rem; }
+    .exp-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: .3rem; }
+    .exp-company {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .exp-title {
+      font-size: .82rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: .15rem;
+    }
+    .exp-period {
+      font-size: .8rem;
+      color: var(--muted);
+      background: rgba(255,255,255,.05);
+      padding: .2rem .6rem;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .exp-desc {
+      margin-top: .6rem;
+      color: #94a3b8;
+      font-size: .88rem;
+    }
+    .exp-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .7rem; }
+    .tag {
+      font-size: .73rem;
+      font-weight: 500;
+      padding: .18rem .55rem;
+      border-radius: 4px;
+      background: rgba(14,165,233,.12);
+      color: var(--teal2);
+      border: 1px solid rgba(14,165,233,.2);
+      letter-spacing: .02em;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {}
+
+    /* Education */
+    .edu-item { margin-bottom: 1.4rem; }
+    .edu-degree { font-weight: 600; font-size: .92rem; color: var(--white); }
+    .edu-school { font-size: .83rem; color: var(--teal2); }
+    .edu-year { font-size: .78rem; color: var(--muted); margin-top: .1rem; }
+
+    /* Skills */
+    .skill-group { margin-bottom: 1.3rem; }
+    .skill-label { font-size: .8rem; font-weight: 600; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; margin-bottom: .5rem; }
+    .skill-pills { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .skill-pill {
+      font-size: .75rem;
+      padding: .22rem .6rem;
+      border-radius: 4px;
+      background: rgba(255,255,255,.05);
+      color: #c8d8ea;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    /* Certifications */
+    .cert-list { list-style: none; }
+    .cert-list li {
+      font-size: .82rem;
+      color: #b8c8e0;
+      padding: .3rem 0;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      display: flex; align-items: flex-start; gap: .5rem;
+    }
+    .cert-list li::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: .65rem;
+      margin-top: .25rem;
+      flex-shrink: 0;
+    }
+
+    /* Trailblazer */
+    .trailblazer-card {
+      background: linear-gradient(135deg, rgba(14,165,233,.12), rgba(240,165,0,.08));
+      border: 1px solid rgba(14,165,233,.2);
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 2rem;
+    }
+    .trailblazer-card p { font-size: .82rem; color: var(--muted); margin-top: .3rem; }
+    .trailblazer-card a { color: var(--teal); text-decoration: none; font-weight: 500; font-size: .82rem; }
+    .trailblazer-card a:hover { color: var(--gold); }
+
+    /* Achievements */
+    .achievement-item {
+      display: flex; align-items: flex-start; gap: .8rem;
+      margin-bottom: .8rem;
+    }
+    .achievement-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--teal);
+      line-height: 1;
+      min-width: 2.5rem;
+    }
+    .achievement-text { font-size: .82rem; color: #94a3b8; }
+
+    /* Languages */
+    .lang-row { display: flex; gap: .6rem; flex-wrap: wrap; }
+    .lang-badge {
+      background: rgba(240,165,0,.1);
+      border: 1px solid rgba(240,165,0,.25);
+      color: var(--gold);
+      font-size: .78rem;
+      font-weight: 600;
+      padding: .25rem .75rem;
+      border-radius: 20px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid rgba(255,255,255,.06);
+      color: var(--muted);
+      font-size: .78rem;
+    }
+    footer a { color: var(--teal); text-decoration: none; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    header { animation: fadeUp .7s ease both; }
+    .main-grid > * { animation: fadeUp .7s ease both; }
+    .main-grid > *:nth-child(2) { animation-delay: .15s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .header-inner { grid-template-columns: 1fr; text-align: center; }
+      .contact-row { justify-content: center; }
+      .main-grid { grid-template-columns: 1fr; }
+      .avatar-wrap { margin: 0 auto; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ═══════════════ HEADER ═══════════════ -->
+  <header>
+    <div class="header-inner">
+
+      <!-- Profile Photo: place profile.jpg in same folder as index.html -->
+      <div class="avatar-wrap">
+        <img src="profile.jpg" alt="Rajesh Kumar Sahoo"
+             onerror="if(!this.dataset.errored){this.dataset.errored='1';this.style.display='none';var fb=document.getElementById('avatar-fallback');if(fb)fb.style.display='flex';}"/>
+        <div id="avatar-fallback" style="display:none;position:relative;z-index:1;width:150px;height:150px;border-radius:50%;background:#112240;border:3px solid #0a1628;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:#0ea5e9;">RK</div>
+      </div>
+
+      <div class="name-block">
+        <h1>Rajesh Kumar <span>Sahoo</span></h1>
+        <div class="title-tag">Salesforce Senior Technical Architect &nbsp;|&nbsp; AI Specialist</div>
+        <p class="tagline">
+          14+ years crafting enterprise Salesforce solutions for Fortune 500 clients — automotive, healthcare, and contact center transformation.
+        </p>
+        <div class="contact-row">
+          <span>📍 Rochester Hills, MI 48307</span>
+          <span>📞 (248) 961-9564</span>
+          <a href="mailto:rajeshsahoo2006@gmail.com">✉ rajeshsahoo2006@gmail.com</a>
+          <a href="https://www.linkedin.com/in/rajeshkumsahoo/" target="_blank">🔗 LinkedIn</a>
+          <a href="https://www.salesforce.com/trailblazer/rajeshkumsahoo" target="_blank">☁ Trailblazer</a>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ═══════════════ MAIN GRID ═══════════════ -->
+  <div class="main-grid">
+
+    <!-- ─── LEFT: EXPERIENCE ─── -->
+    <main>
+
+      <section class="summary">
+        <div class="section-title">Professional Summary</div>
+        <p>
+          Highly accomplished Salesforce Technical Architect with 14+ years of experience designing and implementing complex enterprise solutions across automotive and healthcare industries. Specializes in digital transformation, contact center implementations, and AI-powered Salesforce capabilities. Proven leader on large-scale projects for Fortune 500 companies including General Motors, CVS MinuteClinic, Chrysler, and Stellantis. Currently pursuing a Master's in Artificial Intelligence at University of the Cumberlands.
+        </p>
+      </section>
+
+      <section>
+        <div class="section-title">Experience</div>
+
+        <!-- GM OnStar -->
+        <div class="exp-item">
+          <div class="exp-header">
+            <div>
+              <div class="exp-company">General Motors — OnStar / CARE</div>
+              <div class="exp-title">Salesforce Technical Architect</div>
+            </div>
+            <div class="exp-period">2022 – Present</div>
+          </div>
+          <div class="exp-desc">
+            Led comprehensive digital transformation of GM's OnStar and CARE systems — migrating from legacy GAA Java/Siebel applications to Salesforce Automotive Cloud across NAFTA and European regions. Architected multi-lingual data-sharing models, connected vehicle integrations, and NHTSA/TREAD Act compliance frameworks.
+          </div>
+          <div class="exp-tags">
+            <span class="tag">Automotive Cloud</span><span class="tag">Service Cloud Voice</span>
+            <span class="tag">OmniStudio</span><span class="tag">NiceCX</span>
+            <span class="tag">Experience Cloud</span><span class="tag">Copado</span>
+            <span class="tag">Azure DevOps</span><span class="tag">Data Migration</span>
+          </div>
+        </div>
+
+        <!-- CVS MinuteClinic -->
+        <div class="exp-item">
+          <div class="exp-header">
+            <div>
+              <div class="exp-company">CVS Health — MinuteClinic</div>
+              <div class="exp-title">Salesforce Architect — Contact Center</div>
+            </div>
+            <div class="exp-period">2021 – 2022</div>
+          </div>
+          <div class="exp-desc">
+            Architected a HIPAA-compliant contact center on Salesforce Service Cloud — including appointment scheduling, insurance verification, Genesys Open CTI, and EPIC EMR integration for real-time patient data access.
+          </div>
+          <div class="exp-tags">
+            <span class="tag">Service Cloud</span><span class="tag">Open CTI</span>
+            <span class="tag">Genesys</span><span class="tag">EPIC Integration</span>
+            <span class="tag">HIPAA Compliance</span><span class="tag">Healthcare APIs</span>
+          </div>
+        </div>
+
+        <!-- FCA / Chrysler -->
+        <div class="exp-item">
+          <div class="exp-header">
+            <div>
+              <div class="exp-company">FCA / Chrysler / Stellantis</div>
+              <div class="exp-title">Technical Lead — Digital Transformation</div>
+            </div>
+            <div class="exp-period">2011 – 2021</div>
+          </div>
+          <div class="exp-desc">
+            Supported and transformed 6+ mission-critical contact center applications — migrating from Java/WebSphere/DB2 to Salesforce Service &amp; Experience Cloud. Built specialized programs: Dealer Parts Support, Fleet Management, Recall Outreach, Courtesy Transport (Loaner), Vehicle Buyback, and Marketing Contact Center. Reduced maintenance costs 40%, improved CSAT 35%, and achieved 99.9% uptime.
+          </div>
+          <div class="exp-tags">
+            <span class="tag">Service Cloud</span><span class="tag">Experience Cloud</span>
+            <span class="tag">Java/J2EE</span><span class="tag">IBM WebSphere</span>
+            <span class="tag">IBM DB2</span><span class="tag">REST/SOAP APIs</span>
+            <span class="tag">Genesys CTI</span><span class="tag">MuleSoft</span>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Key Achievements -->
+      <section>
+        <div class="section-title">Key Achievements</div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: .8rem;">
+          <div class="achievement-item">
+            <div class="achievement-num">40%</div>
+            <div class="achievement-text">Reduction in system maintenance costs at Chrysler/FCA</div>
+          </div>
+          <div class="achievement-item">
+            <div class="achievement-num">35%</div>
+            <div class="achievement-text">Improvement in customer satisfaction scores</div>
+          </div>
+          <div class="achievement-item">
+            <div class="achievement-num">25%</div>
+            <div class="achievement-text">Decrease in average call handling time</div>
+          </div>
+          <div class="achievement-item">
+            <div class="achievement-num">99.9%</div>
+            <div class="achievement-text">System availability across all managed platforms</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ─── RIGHT: SIDEBAR ─── -->
+    <aside class="sidebar">
+
+      <!-- Trailblazer -->
+      <div class="trailblazer-card">
+        <div class="section-title" style="border:none;margin-bottom:.4rem;padding:0;">☁ Salesforce Trailblazer</div>
+        <p>Certifications, badges &amp; community standing.</p>
+        <a href="https://www.salesforce.com/trailblazer/rajeshkumsahoo" target="_blank">View Trailblazer Profile →</a>
+      </div>
+
+      <!-- Education -->
+      <section>
+        <div class="section-title">Education</div>
+        <div class="edu-item">
+          <div class="edu-degree">M.S. Artificial Intelligence</div>
+          <div class="edu-school">University of the Cumberlands</div>
+          <div class="edu-year">In Progress (2024 – Present)</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">B.E. — Electronics & Communication</div>
+          <div class="edu-school">Academic Project: 8-bit processor in VHDL/C</div>
+        </div>
+      </section>
+
+      <!-- Certifications -->
+      <section>
+        <div class="section-title">Certifications</div>
+        <ul class="cert-list">
+          <li>Application Architect</li>
+          <li>Integration Architect</li>
+          <li>Sharing & Visibility Architect</li>
+          <li>AI Certified &amp; AI Specialist</li>
+          <li>Data Cloud</li>
+          <li>Service Cloud Consultant</li>
+          <li>Sales Cloud Consultant</li>
+          <li>Platform Developer I</li>
+          <li>OmniStudio Developer</li>
+          <li>MuleSoft Developer L1</li>
+          <li>Advanced Administrator</li>
+          <li>Certified Java Developer</li>
+        </ul>
+      </section>
+
+      <!-- Skills -->
+      <section>
+        <div class="section-title">Core Skills</div>
+        <div class="skill-group">
+          <div class="skill-label">Salesforce</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Service Cloud</span>
+            <span class="skill-pill">Automotive Cloud</span>
+            <span class="skill-pill">Experience Cloud</span>
+            <span class="skill-pill">OmniStudio</span>
+            <span class="skill-pill">Apex / LWC</span>
+            <span class="skill-pill">Flow Builder</span>
+            <span class="skill-pill">Einstein AI</span>
+            <span class="skill-pill">Agentforce</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-label">Integration</div>
+          <div class="skill-pills">
+            <span class="skill-pill">MuleSoft</span>
+            <span class="skill-pill">REST/SOAP</span>
+            <span class="skill-pill">Open CTI</span>
+            <span class="skill-pill">IBM WebSphere</span>
+            <span class="skill-pill">Genesys</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-label">Dev & Cloud</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Java / J2EE</span>
+            <span class="skill-pill">SQL / SOQL</span>
+            <span class="skill-pill">Azure DevOps</span>
+            <span class="skill-pill">Copado</span>
+            <span class="skill-pill">Git</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Languages -->
+      <section>
+        <div class="section-title">Languages</div>
+        <div class="lang-row">
+          <span class="lang-badge">English</span>
+          <span class="lang-badge">Hindi</span>
+        </div>
+      </section>
+
+    </aside>
+  </div>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer>
+    <p>© 2025 Rajesh Kumar Sahoo &nbsp;·&nbsp;
+      <a href="mailto:rajeshsahoo2006@gmail.com">rajeshsahoo2006@gmail.com</a>
+      &nbsp;·&nbsp;
+      <a href="https://www.linkedin.com/in/rajeshkumsahoo/" target="_blank">LinkedIn</a>
+      &nbsp;·&nbsp;
+      <a href="https://www.salesforce.com/trailblazer/rajeshkumsahoo" target="_blank">Trailblazer</a>
+    </p>
+  </footer>
+
+</div>
+</body>
+</html>
